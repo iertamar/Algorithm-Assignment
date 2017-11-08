@@ -1,0 +1,65 @@
+import java.util.*;
+ class Rank{
+    public static void main(String args[])
+    {
+        Scanner sc  = new Scanner(System.in);
+	System.out.println("enter total number of elements : ");
+        int n = sc.nextInt();
+	int a[]  =new int[n];
+	System.out.println("enter all numbers one by one : ");
+	for(int i = 0; i<n ;i++)
+	{
+		a[i] = sc.nextInt();
+	}
+	System.out.println("enter rank : ");
+	int r = sc.nextInt();
+        int low = 0;
+	int high = a.length - 1;
+        int result = findRank(a,low,high,r);
+        System.out.println("Element of rank "+r+"  is :   "+a[result]);
+     }
+     static int findRank(int a[], int i, int j, int r)
+     {
+         int k;
+         if(j<i)
+             return -1;
+         else
+         {
+             k = Partition(a , i , j );
+             if(r==j-k+1)
+                 return k;
+             else if(r<j-k+1)
+                return  findRank(a,k+1,j,r);
+             else
+                return findRank(a,i,k-1,r-j+k-1);
+         }
+     }
+     
+   static  int Partition(int arr[], int low, int high )
+    {
+         
+        int i = (low-1); // index of smaller element
+        int x = arr[high];
+        for (int j=low; j<high; j++)
+        {
+            // If current element is smaller than or
+            // equal to pivot
+            if (arr[j] <= x)
+            {
+                i++;
+ 
+                // swap arr[i] and arr[j]
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+ 
+        // swap arr[i+1] and arr[high] (or pivot)
+        int temp = arr[i+1];
+        arr[i+1] = arr[high];
+        arr[high] = temp;
+ 
+        return i+1;
+    }
+}
